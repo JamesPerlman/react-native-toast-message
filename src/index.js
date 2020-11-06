@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
 import { Animated, PanResponder } from 'react-native';
+import React, { Component } from 'react';
 
-import SuccessToast from './components/success';
 import ErrorToast from './components/error';
 import InfoToast from './components/info';
+import SuccessToast from './components/success';
 import { complement } from './utils/arr';
 import { includeKeys } from './utils/obj';
 import styles from './styles';
@@ -265,6 +265,7 @@ class Toast extends Component {
           'type',
           'inProgress',
           'isVisible',
+          'props',
           'text1',
           'text2',
           'hide',
