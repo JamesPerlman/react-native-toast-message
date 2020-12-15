@@ -4,7 +4,11 @@
 [![npm downloads](https://img.shields.io/npm/dw/react-native-toast-message)](https://www.npmjs.com/package/react-native-toast-message)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-An animated toast message component for React Native that can be called imperatively.
+Animated toast message component for React Native.
+
+- Imperative API
+- Keyboard aware
+- Flexible config
 
 ## Install
 
@@ -20,7 +24,6 @@ Render the `Toast` component in your app entry file (along with everything that 
 
 ```js
 // App.jsx
-import React from 'react';
 import Toast from 'react-native-toast-message';
 
 function App(props) {
@@ -35,15 +38,21 @@ function App(props) {
 export default App;
 ```
 
-Then use it anywhere in your app, by calling any `Toast` method directly:
+Then use it anywhere in your app (even outside React components), by calling any `Toast` method directly:
 
 ```js
 import Toast from 'react-native-toast-message';
 
-Toast.show({
-  text1: 'Hello',
-  text2: 'This is some something 👋'
-});
+function SomeComponent() {
+  React.useEffect(() => {
+    Toast.show({
+      text1: 'Hello',
+      text2: 'This is some something 👋'
+    });
+  }, []);
+
+  return <View />;
+}
 ```
 
 ## API
@@ -66,7 +75,8 @@ Toast.show({
   topOffset: 30,
   bottomOffset: 40,
   onShow: () => {},
-  onHide: () => {}
+  onHide: () => {},
+  onPress: () => {}
 });
 ```
 
@@ -78,19 +88,40 @@ Toast.hide({
 });
 ```
 
-## Customizing the toast types
+## props
+
+Props that can be set on the `Toast` instance. They act as defaults for all Toasts that are shown.
+
+```js
+const props = {
+  config: Object,
+  style: ViewStyle,
+  topOffset: Number,
+  bottomOffset: Number,
+  keyboardOffset: Number,
+  visibilityTime: Number,
+  autoHide: Boolean,
+  height: Number,
+  position: 'top' | 'bottom',
+  type: String
+};
+```
+
+> Default `Animated.View` styles can be found in [styles.js](https://github.com/calintamas/react-native-toast-message/blob/master/src/styles.js#L4). They can be extended using the `style` prop.
+
+## Customize Toast types
 
 If you want to add custom types - or overwrite the existing ones - you can add a `config` prop when rendering the `Toast` in your app `root`.
 
 ```js
 // App.jsx
-import React from 'react';
 import Toast from 'react-native-toast-message';
 
 const toastConfig = {
-  success: (internalState) => (
+  success: ({ text1, props, ...rest }) => (
     <View style={{ height: 60, width: '100%', backgroundColor: 'pink' }}>
-      <Text>{internalState.text1}</Text>
+      <Text>{text1}</Text>
+      <Text>{props.guid}</Text>
     </View>
   ),
   error: () => {},
@@ -113,7 +144,69 @@ export default App;
 Then just use the library as before
 
 ```js
-Toast.show({ type: 'any_custom_type' });
+Toast.show({
+  type: 'any_custom_type',
+  props: { onPress: () => {}, guid: 'guid-id' }
+});
+```
+
+## Change default Toast style
+
+In addition to creating Toast styles from scratch (shown above), you can use the default `BaseToast` style and adjust its layout.
+
+```js
+// App.jsx
+import Toast, { BaseToast } from 'react-native-toast-message';
+
+const toastConfig = {
+  success: ({ text1, ...rest }) => (
+    <BaseToast
+      {...rest}
+      style={{ borderLeftColor: 'pink' }}
+      contentContainerStyle={{ paddingHorizontal: 15 }}
+      text1Style={{
+        fontSize: 15,
+        fontWeight: 'semibold'
+      }}
+      text1={text1}
+      text2={null}
+    />
+  )
+};
+
+function App(props) {
+  return (
+    <>
+      {/* ... */}
+      <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
+    </>
+  );
+}
+
+export default App;
+```
+
+Available `props` on `BaseToast`:
+
+```js
+const baseToastProps = {
+  leadingIcon: ImageSource,
+  trailingIcon: ImageSource,
+  text1: String,
+  text2: String,
+  onPress: Function,
+  onLeadingIconPress: Function,
+  onTrailingIconPress: Function,
+  style: ViewStyle,
+  leadingIconContainerStyle: ViewStyle,
+  trailingIconContainerStyle: ViewStyle,
+  leadingIconStyle: ViewStyle,
+  trailingIconStyle: ViewStyle,
+  contentContainerStyle: ViewStyle,
+  text1Style: ViewStyle,
+  text2Style: ViewStyle,
+  activeOpacity: Number
+};
 ```
 
 ## Credits

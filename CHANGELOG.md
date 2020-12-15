@@ -9,6 +9,48 @@ Headers are one of:
 
 - `Added`, `Changed`, `Removed` or `Fixed`.
 
+## [1.4.1]
+
+### Fixed
+
+- Fix type declaration file, fixes [#109](https://github.com/calintamas/react-native-toast-message/issues/109)
+
+## [1.4.0]
+
+### Added
+
+- Add `onPress` to `Toast.show` method, fixes [#86](https://github.com/calintamas/react-native-toast-message/issues/98)
+- Export `BaseToast` component to allow styling, fixes [#50](https://github.com/calintamas/react-native-toast-message/issues/50), [#68](https://github.com/calintamas/react-native-toast-message/issues/68), [#87](https://github.com/calintamas/react-native-toast-message/issues/87), [#97](https://github.com/calintamas/react-native-toast-message/issues/97)
+- Add `topOffset`, `bottomOffset` and `visibilityTime` as instance props, fixes [#98](https://github.com/calintamas/react-native-toast-message/issues/98)
+- When shown with `position: bottom`, Toast is now Keyboard aware, fixes [#65](https://github.com/calintamas/react-native-toast-message/issues/65)
+
+## [1.3.7]
+
+### Added
+
+- Add Typescript declaration file, fixes [#83](https://github.com/calintamas/react-native-toast-message/issues/83) ([spidi123q](https://github.com/spidi123q) in [#94](https://github.com/calintamas/react-native-toast-message/pull/94))
+
+### Fixed
+
+- Allow style prop to style the base component, fixes [#92](https://github.com/calintamas/react-native-toast-message/issues/92) ([akmjenkins](https://github.com/akmjenkins) in [#93](https://github.com/calintamas/react-native-toast-message/pull/93))
+
+## [1.3.6]
+
+### Fixed
+
+- Custom render props are now part of the initial state. This removes the need to use optional chaining when defining a custom toast `config`
+
+## [1.3.5]
+
+### Added
+
+- Allow arbitrary data to be passed into Toasts [#79](https://github.com/calintamas/react-native-toast-message/issues/79) ([troyvnit](https://github.com/troyvnit) in [#81](https://github.com/calintamas/react-native-toast-message/pull/81))
+
+### Fixed
+
+- In case of RTL the text will start from the right ([timorss](https://github.com/timorss) in [#84](https://github.com/calintamas/react-native-toast-message/pull/84))
+- null is not an object (evaluating 'this.\_ref.show') [#89](https://github.com/calintamas/react-native-toast-message/issues/89) ([rogerkerse](https://github.com/rogerkerse) in [#90](https://github.com/calintamas/react-native-toast-message/pull/90))
+
 ## [1.3.4]
 
 ### Fixed
